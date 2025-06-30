@@ -14,25 +14,22 @@ from sklearn.metrics import (
     classification_report, confusion_matrix
 )
 
-# ─────── Configuration du thème sombre personnalisé ───────
+# ─────── Configuration du thème sombre et rouge sang ───────
 st.set_page_config(page_title="Information sur les données Arsène MBABEH MEYE", layout="wide")
 
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: black;
-        color: white;
-        background-image: url("https://via.placeholder.com/600x400?text=DEMON");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        opacity: 0.95;
+        background-color: #000000;  /* Noir total */
+        color: #ff4c4c;             /* Rouge vif */
     }
+    .css-1d391kg { color: #ff1744; } /* Titres accent rouge */
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # ─────── Titre ───────
 st.title("Information sur les données Arsène MBABEH MEYE")
