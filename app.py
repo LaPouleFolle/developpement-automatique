@@ -14,21 +14,22 @@ from sklearn.metrics import (
     classification_report, confusion_matrix
 )
 
-# ─────── Configuration du thème sombre et rouge sang ───────
+# ─────── Configuration du thème bleu───────
 st.set_page_config(page_title="Information sur les données Arsène MBABEH MEYE", layout="wide")
 
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #000000;  /* Noir total */
-        color: #ff4c4c;             /* Rouge vif */
+        background-color: #0f1c2e;  /* Bleu nuit */
+        color: #e0f7fa;             /* Cyan clair */
     }
-    .css-1d391kg { color: #ff1744; } /* Titres accent rouge */
+    .css-1d391kg { color: #00acc1; } /* Titres accent cyan */
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # ─────── Titre ───────
