@@ -17,18 +17,14 @@ from sklearn.metrics import (
 # ─────── Ici je vais configurer les couleurs du site ───────
 st.set_page_config(page_title="Information sur les données Arsène MBABEH MEYE", layout="wide")
 
-st.markdown(
-    """
+st.markdown("""
     <style>
     .stApp {
-        background-color: white;
-        color: black;
+        background-color: #f9f9f9;
+        color: #222;
     }
-    .css-1d391kg { color: black; }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
 
 
