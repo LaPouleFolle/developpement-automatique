@@ -1,4 +1,4 @@
-# ───────🔁 Imports ───────
+# ─────── Imports ───────
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -14,29 +14,48 @@ from sklearn.metrics import (
     classification_report, confusion_matrix
 )
 
-# ───────📌 Configuration ───────
-st.set_page_config(page_title="Data Insight 360", layout="wide")
-st.title("📊 Data Insight 360")
+# ─────── Configuration du thème sombre personnalisé ───────
+st.set_page_config(page_title="Information sur les données Arsène MBABEH MEYE", layout="wide")
+
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: black;
+        color: white;
+        background-image: url("https://via.placeholder.com/600x400?text=DEMON");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        opacity: 0.95;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# ─────── Titre ───────
+st.title("Information sur les données Arsène MBABEH MEYE")
 st.markdown("Importe un fichier CSV pour démarrer l’analyse et l'entraînement automatique d’un modèle.")
 
-# ───────📁 Upload et chargement ───────
+# ─────── Upload et chargement ───────
 uploaded_file = st.file_uploader("Choisir un fichier CSV", type=["csv"])
 
 if uploaded_file is not None:
     sep = st.selectbox("Choisir le séparateur du fichier", [",", ";", "\t"], index=1)
     try:
         df = pd.read_csv(uploaded_file, sep=sep)
-        st.success("✅ Fichier chargé avec succès")
-        st.subheader("🔍 Aperçu des données")
+        st.success("Fichier chargé avec succès")
+        st.subheader("Aperçu des données")
         st.dataframe(df.head())
     except Exception as e:
-        st.error(f"❌ Erreur de chargement : {e}")
+        st.error(f"Erreur de chargement : {e}")
         st.stop()
 else:
     st.stop()
 
-# ───────📊 Analyse exploratoire ───────
-st.subheader("📈 Visualisations interactives")
+# ─────── Analyse exploratoire ───────
+st.subheader("Visualisations interactives")
 
 plot_type = st.selectbox("Type de graphique", ["Bar", "Box", "Scatter"])
 x_col = st.selectbox("Colonne X", df.columns)
@@ -59,8 +78,8 @@ if st.checkbox("Afficher la heatmap des corrélations"):
     sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr)
     st.pyplot(fig_corr)
 
-# ───────🤖 Machine Learning automatique ───────
-st.subheader("🤖 Modélisation automatique")
+# ─────── Machine Learning automatique ───────
+st.subheader("Modélisation automatique")
 
 target_column = st.selectbox("Choisir la variable cible à prédire", df.columns)
 
@@ -87,17 +106,17 @@ if target_column:
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
 
-        # ───────📈 Résultats du modèle ───────
-        st.markdown(f"### 📊 Résultats du modèle : {model_type}")
+        # ─────── Résultats du modèle ───────
+        st.markdown(f"### Résultats du modèle : {model_type}")
 
         if model_type == "Classification":
             acc = accuracy_score(y_test, y_pred)
-            st.success(f"✅ Accuracy : {acc:.2f}")
+            st.success(f"Accuracy : {acc:.2f}")
 
-            st.markdown("**📋 Rapport de classification :**")
+            st.markdown("**Rapport de classification :**")
             st.text(classification_report(y_test, y_pred))
 
-            st.markdown("**🧱 Matrice de confusion :**")
+            st.markdown("**Matrice de confusion :**")
             cm = confusion_matrix(y_test, y_pred)
             fig_cm, ax_cm = plt.subplots()
             sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", ax=ax_cm)
@@ -107,10 +126,10 @@ if target_column:
 
         else:
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-            st.success(f"✅ RMSE : {rmse:.2f}")
+            st.success(f"RMSE : {rmse:.2f}")
 
-        # ───────⭐ Importance des variables ───────
-        st.markdown("### ⭐ Variables les plus importantes")
+        # ─────── Importance des variables ───────
+        st.markdown("### Variables les plus importantes")
         importance_df = pd.DataFrame({
             "Variable": X.columns,
             "Importance": model.feature_importances_
@@ -122,24 +141,24 @@ if target_column:
         sns.barplot(x="Importance", y="Variable", data=importance_df, ax=ax_imp)
         st.pyplot(fig_imp)
 
-        # ───────💾 Export des prédictions ───────
-        st.subheader("📥 Télécharger les prédictions")
+        # ─────── Export des prédictions ───────
+        st.subheader("Télécharger les prédictions")
         result_df = X_test.copy()
         result_df["Valeur réelle"] = y_test
         result_df["Prédiction"] = y_pred
 
         csv = result_df.to_csv(index=False).encode("utf-8")
         st.download_button(
-            label="📁 Télécharger en CSV",
+            label="Télécharger en CSV",
             data=csv,
             file_name="predictions.csv",
             mime="text/csv"
         )
 
-        # ───────📦 Sauvegarde du modèle ───────
-        if st.button("💾 Sauvegarder le modèle"):
+        # ─────── Sauvegarde du modèle ───────
+        if st.button("Sauvegarder le modèle"):
             joblib.dump(model, "modele_entraine.pkl")
-            st.success("✅ Modèle sauvegardé sous 'modele_entraine.pkl'")
+            st.success("Modèle sauvegardé sous 'modele_entraine.pkl'")
 
     except Exception as e:
-        st.error(f"❌ Une erreur est survenue : {e}")
+        st.error(f"Une erreur est survenue : {e}")
