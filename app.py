@@ -1,4 +1,4 @@
-# ─────── Imports ───────
+# ─────── Imports des packages afin de traiter le projet  ───────
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -14,17 +14,17 @@ from sklearn.metrics import (
     classification_report, confusion_matrix
 )
 
-# ─────── Configuration du thème bleu───────
+# ─────── Ici je vais configurer les couleurs du site ───────
 st.set_page_config(page_title="Information sur les données Arsène MBABEH MEYE", layout="wide")
 
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #0f1c2e;  /* Bleu nuit */
-        color: #e0f7fa;             /* Cyan clair */
+        background-color: white;
+        color: black;
     }
-    .css-1d391kg { color: #00acc1; } /* Titres accent cyan */
+    .css-1d391kg { color: black; }
     </style>
     """,
     unsafe_allow_html=True
@@ -32,11 +32,12 @@ st.markdown(
 
 
 
+
 # ─────── Titre ───────
 st.title("Information sur les données Arsène MBABEH MEYE")
 st.markdown("Importe un fichier CSV pour démarrer l’analyse et l'entraînement automatique d’un modèle.")
 
-# ─────── Upload et chargement ───────
+# ───────chargement du fichier ───────
 uploaded_file = st.file_uploader("Choisir un fichier CSV", type=["csv"])
 
 if uploaded_file is not None:
@@ -76,7 +77,7 @@ if st.checkbox("Afficher la heatmap des corrélations"):
     sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr)
     st.pyplot(fig_corr)
 
-# ─────── Machine Learning automatique ───────
+# ─────── Machine Learning ───────
 st.subheader("Modélisation automatique")
 
 target_column = st.selectbox("Choisir la variable cible à prédire", df.columns)
