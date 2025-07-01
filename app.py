@@ -57,11 +57,31 @@ else:
 # ─────── Analyse exploratoire ───────
 st.markdown("### 2. Analyse exploratoire")
 
+if st.checkbox("Afficher les statistiques descriptives"):
+    st.write(df.describe())
+
+if st.checkbox("Afficher les valeurs manquantes"):
+    st.dataframe(df.isnull().sum().reset_index().rename(columns={0: 'Nombre de valeurs manquantes', 'index': 'Colonnes'}))
+
 if st.checkbox("Afficher les corrélations (variables numériques uniquement)"):
     corr = df.select_dtypes(include=np.number).corr()
     fig_corr, ax_corr = plt.subplots(figsize=(10, 6))
     sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr)
     st.pyplot(fig_corr)
+
+if st.checkbox("Afficher la distribution des variables numériques"):
+    numeric_cols = df.select_dtypes(include=np.number).columns
+    for col in numeric_cols:
+        fig, ax = plt.subplots()
+        sns.histplot(df[col].dropna(), kde=True, ax=ax)
+        ax.set_title(f"Distribution de {col}")
+        st.pyplot(fig)
+
+if st.checkbox("Afficher les variables catégorielles (fréquence)"):
+    cat_cols = df.select_dtypes(include='object').columns
+    for col in cat_cols:
+        st.write(f"#### Fréquence des valeurs pour '{col}'")
+        st.dataframe(df[col].value_counts())
 
 st.markdown("#### Visualisation interactive")
 plot_type = st.selectbox("Type de graphique", ["Bar", "Box", "Scatter"])
