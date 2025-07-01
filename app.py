@@ -25,7 +25,7 @@ except ImportError:
 
 # ─────── config du titre ───────
 st.set_page_config(page_title="Développé par Arsène MBABEH MEYE", layout="wide")
-st.title("Développé par Arsène MBABEH MEYE - Application de Data Science")
+st.title("Développé par Arsène MBABEH MEYE - Application de la Data Science")
 
 # ───────section pour charger les fichiers ───────
 st.markdown("### 1. Importation des données")
