@@ -25,7 +25,18 @@ except ImportError:
 
 # ─────── config du titre ───────
 st.set_page_config(page_title="Développé par Arsène MBABEH MEYE", layout="wide")
-st.title("Développé par Arsène MBABEH MEYE - Application de la Data Science")
+st.title("Développé par Arsène MBABEH MEYE - Application de Data Science")
+
+# ─────── Objectif métier ───────
+st.markdown("### 0. Quel est votre objectif métier ?")
+objectif = st.radio("Choisissez une intention parmi les suivantes :", [
+    "Prédire un phénomène futur (ex: coupure réseau)",
+    "Comprendre les causes d’un phénomène (ex: réclamations)",
+    "Explorer les données sans prédiction"
+])
+
+if objectif == "Explorer les données sans prédiction":
+    st.info("Vous pouvez explorer vos données dans la section suivante.")
 
 # ───────section pour charger les fichiers ───────
 st.markdown("### 1. Importation des données")
@@ -74,7 +85,7 @@ predict_now = st.radio("Choisir", ["Non", "Oui"])
 
 if predict_now == "Oui":
     st.markdown("### 4. Configuration du modèle")
-    target = st.selectbox("Choisir la variable cible", df.columns)
+    target = st.selectbox("Choisir la variable cible à prédire", df.columns)
 
     if target:
         X = df.drop(columns=[target])
@@ -133,6 +144,7 @@ if predict_now == "Oui":
         else:
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             st.write(f"Erreur quadratique moyenne (RMSE) : {rmse:.2f}")
+            st.info("\nLe RMSE indique l'écart moyen entre les valeurs réelles et prédites. Plus il est faible, plus le modèle est précis.")
 
         if hasattr(model, "feature_importances_"):
             st.markdown("#### Importance des variables")
